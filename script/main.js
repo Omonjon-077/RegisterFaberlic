@@ -29,7 +29,7 @@ let toast = document.querySelector(".toast");
 // FOR SEND BOT
 let bot = {
     TOKEN: "6595201002:AAEhyP9yPVomWKZNO9xHzjyZOpeoNqGomO4",
-    chatID: "-4148486313",
+    chatID: "-1001999807098",
 }
 
 form.addEventListener("submit", (e) => {
@@ -42,29 +42,30 @@ form.addEventListener("submit", (e) => {
 
     let sendMessage = `Mijoz %0A Ismi: ${name} %0A Familiyasi: ${lastName} %0A Telefon raqami: ${phone} %0A Manzili: ${location}`
 
-    fetch(`https://api.telegram.org/bot${bot.TOKEN}/sendMessage?chat_id=${bot.chatID}&text=${sendMessage}`, {
-        method: "GET"
-    })
-        .then(success => {
-            if (contactName.value == "" || contactLastName.value == "" || contactPhone.value == "" || contactLocation.value == "") {
-                alert("Bosh joyni to'ldiring!");
-            } else if(!check.checked){
-                alert("rozilik bildiring jo'natish uchun!");
-            } else {
+
+    if (contactName.value == "" || contactLastName.value == "" || contactPhone.value == "" || contactLocation.value == "") {
+        alert("Bosh joy to'ldirilmagan!");
+    } else if (!check.checked) {
+        alert("Rozilik tugmasi bosilmagan!")
+    } else {
+        fetch(`https://api.telegram.org/bot${bot.TOKEN}/sendMessage?chat_id=${bot.chatID}&text=${sendMessage}`, {
+            method: "GET"
+        })
+            .then(success => {
                 contactName.value = "";
                 contactLastName.value = "";
                 contactPhone.value = "";
                 contactLocation.value = "";
                 toast.classList.add("show");
-                setTimeout(function(){
+                setTimeout(function () {
                     toast.classList.remove("show");
                 }, 5000);
-            }
-        }, error => {
-            alert("Xabaringiz jo'natilmadi, iltimos keginroq urunib ko'ring!");
-            contactName.value = "";
-            contactLastName.value = "";
-            contactPhone.value = "";
-            contactLocation.value = "";
-        })
+            }, error => {
+                alert("Xabaringiz jo'natilmadi, iltimos keginroq urunib ko'ring!");
+                contactName.value = "";
+                contactLastName.value = "";
+                contactPhone.value = "";
+                contactLocation.value = "";
+            })
+    }
 })
